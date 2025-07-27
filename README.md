@@ -3,8 +3,7 @@
 Inspired by the impressive multi-domain knowledge presented by large language models (LLMs), this study investigates whether pretrained LLM agents possess grounded understanding of the real-world heterogeneous urban transportation systems. Multiple LLM agents and various datasets from diverse metropolitan transportation systems including road traffic, public transit, and electrified transportation are considered for comprehensive evaluation.
 
 <img title="Spatial and temporal knowledge extraction from LLM agents" width="1904" height="984" alt="llm-spatiotemporal-knowledge-framework" src="https://github.com/user-attachments/assets/a4434357-ac1a-4072-8b24-f3ba07e8c4ee" />
-
-**Fig. 1** Spatial and temporal knowledge extraction from LLM agents
+Fig. 1 Spatial and temporal knowledge extraction from LLM agents
 
 ## LLMs
 The **Llama-3.1-8B**, **Qwen-3-8B**, and **Qwen-3-14B** agents, three competitive, open-source, lightweight, and ultra-fast pretrained LLMs, are applied in this study. Released in July 2024, experiments have revealed the superiority of the Llama-3.1-8B model over the well-known GPT-3.5-Turbo model with 20 billion parameters across a variety of tasks ([Grattafiori et al., 2024](https://doi.org/10.48550/arXiv.2407.21783)). Qwen-3-8B and Qwen-3-14B are recent state-of-the-art open-source LLMs unveiled in May 2025 ([Yang et al., 2025](https://doi.org/10.48550/arXiv.2505.09388)). In contrast to the Llama-3.1-8B model, they support “thinking mode”, allowing step-by-step reasoning before final answers for complex problems. Qwen-3-8B is generally superior to the DeepSeek-R1-Distill-Qwen-32B model, while Qwen-3-14B has exhibited comparable performance to the QwQ-32B model.
