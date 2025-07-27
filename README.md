@@ -3,6 +3,7 @@
 Inspired by the impressive multi-domain knowledge presented by large language models (LLMs), this study investigates whether pretrained LLM agents possess grounded understanding of the real-world heterogeneous urban transportation systems. Multiple LLM agents and various datasets from diverse metropolitan transportation systems including road traffic, public transit, and electrified transportation are considered for comprehensive evaluation.
 
 <img title="Spatial and temporal knowledge extraction from LLM agents" width="1904" height="984" alt="llm-spatiotemporal-knowledge-framework" src="https://github.com/user-attachments/assets/a4434357-ac1a-4072-8b24-f3ba07e8c4ee" />
+
 **Fig. 1** Spatial and temporal knowledge extraction from LLM agents
 
 ## LLMs
