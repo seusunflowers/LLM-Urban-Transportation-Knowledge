@@ -122,7 +122,7 @@ def run_bart(gpu_id:int, ollama_host:str, ollama_model:str):
     """
     HIST_TIME_WINDOW = 5
     PRED_TIME_WINDOW = 7
-    RAW_DATA_DICT = 'bart-hourly-ridership'
+    RAW_DATA_DICT = 'bart'
     VAR_UNIT = 'pax/h'
 
     ## get ridership data in Bay Area
@@ -166,16 +166,16 @@ def run_urbanev(gpu_id:int, ollama_host:str, ollama_model:str):
     VAR_UNIT = '%'
 
     ## get electric vehicle charing occupancy data in Shenzhen City
-    zones_points = pd.read_csv(f'{RAW_DATA_DICT}/UrbanEVDataset/20220901-20230228_zone-cleaned-aggregated/zone-stations.csv', usecols=[2,12,14])
-    data = pd.read_csv(f'{RAW_DATA_DICT}/UrbanEVDataset/20220901-20230228_zone-cleaned-aggregated/charge_1hour/occupancy.csv')
+    zones_points = pd.read_excel(f'{RAW_DATA_DICT}/zone-bus-metro-stations.xlsx', usecols=[2,12,14])
+    data = pd.read_csv(f'{RAW_DATA_DICT}/occupancy.csv')
     time_index = pd.to_datetime(data['time'])
     del data['time']
     NODE_NUM = len(data.columns)
     data['daytime'], data['dayofweek'] = time_index.dt.strftime('%H:%M'), time_index.dt.dayofweek
 
     ## calculate adjacency matrix
-    pre_A = pd.read_csv(f'{RAW_DATA_DICT}/UrbanEVDataset/20220901-20230228_zone-cleaned-aggregated/adj.csv').values
-    zone_dist = pd.read_csv(f'{RAW_DATA_DICT}/UrbanEVDataset/20220901-20230228_zone-cleaned-aggregated/distance.csv').values
+    pre_A = pd.read_csv(f'{RAW_DATA_DICT}/adj.csv').values
+    zone_dist = pd.read_csv(f'{RAW_DATA_DICT}/distance.csv').values
     zone_dist[(zone_dist > np.percentile(zone_dist, 5)) & (pre_A == 0)] = np.nan
     adj_mat = np.exp(-(zone_dist / np.nanstd(zone_dist))**2 * 0.3)
     adj_mat[np.isnan(adj_mat)] = 0
@@ -189,7 +189,7 @@ def run_urbanev(gpu_id:int, ollama_host:str, ollama_model:str):
     inference_results = prompt_based_ollama_inference(llm_name=ollama_model, data=data, hist_win=HIST_TIME_WINDOW, pred_win=PRED_TIME_WINDOW, neighbor_indices=neighbor_indices,
                                                       elem_iter=elem_iter, query_template=query_template, var_unit=VAR_UNIT,
                                                       dayofweek_list=['周一', '周二', '周三', '周四', '周五', '周六', '周日'], sample_ratio=1e-3, gpu_id=gpu_id, ollama_host=ollama_host)
-    inference_results.to_csv(f'{RAW_DATA_DICT}/description-qwen3-14b/direct-inference-qwen3-14b.csv.zip', compression='zip')
+    inference_results.to_csv(f'{RAW_DATA_DICT}/llm-description/description-qwen3-14b/direct-inference-qwen3-14b.csv.zip', compression='zip')
 
 
 
@@ -198,7 +198,7 @@ def run_subwaymta(gpu_id:int, ollama_host:str, ollama_model:str):
     """
     HIST_TIME_WINDOW = 5
     PRED_TIME_WINDOW = 7
-    RAW_DATA_DICT = 'nyc-hourly-ridership'
+    RAW_DATA_DICT = 'subway-mta'
     VAR_UNIT = 'pax/h'
 
     ## get ridership data in New York City
