@@ -22,9 +22,12 @@ This script facilitates the extraction of urban-related knowledge and hidden-sta
 - **Embedding Extraction** (`get_llm_output_embeddings`): Generates the model response and extracts the hidden-state embeddings for the last generated token.
 - **Automated Batch Processing** (`enumerate_llm_output_embeddings`): Iteratively processes spatial, temporal, and daily queries for entire datasets.
 
-|  | Query Template |
-| ---- | ---- |
-| BART <br> (station-based) | Please provide details about the location, train operations, ridership demand, and landmarks nearby around the `<name of the station>` Station of the San Francisco Bay Area Rapid Transit System. |
+| Datasets | Query Template |
+| :---- | :---- |
+| BART (station-based) | Please provide details about the location, train operations, ridership demand, and landmarks nearby around the `<name of the station>` Station of the San Francisco Bay Area Rapid Transit System. |
+| METR-LA (detector-based) | Please provide details about the location, traffic demand pattern, and traffic condition on a segment of the `<name of the freeway>` Freeway around `<name of the detector>` in `<name of the city>`, `<name of the county>` County, California, USA. |
+| UrbanEV (TAZ-based) | Please provide details about the details about the land use, residential composition, traffic patterns, electric vehicle friendliness, charging demand, and service levels around `<names of all bus and metro stations within the TAZ>` of Shenzhen City, Guangdong Province, China. (Note that the original queries are written in Chinese) |
+| SUBWAY-MTA (station-based) | Please provide details about the location, train operations, ridership demand, and landmarks nearby about the `<name of the station>` Station in `<name of the borough>` of the New York City Subway System. |
 
 ---
 
