@@ -21,3 +21,28 @@ This script facilitates the extraction of urban-related knowledge and hidden-sta
 - **Response Decoding** (decode_llm_outputs): Post-processes raw token sequences. For Qwen 3, it specifically extracts and separates the reasoning (thinking_content) from the final content using the </think> token.
 - **Embedding Extraction** (get_llm_output_embeddings): Generates the model response and extracts the hidden-state embeddings for the last generated token.
 - **Automated Batch Processing** (enumerate_llm_output_embeddings): Iteratively processes spatial, temporal, and daily queries for entire datasets.
+
+---
+
+### run_parallel_ollama.py
+This script implements a multi-GPU, parallelized inference pipeline for spatial-temporal forecasting using LLMs. It leverages the **Ollama** framework to perform zero-shot/few-shot predictions on diverse datasets, including traffic speed, subway ridership, and EV charging occupancy. The core methodology involves converting numerical time-series data and spatial relationships (neighboring nodes) into natural language prompts, allowing the LLM to reason about physical trends and temporal patterns. Its **key features** including:
+* **Multi-Domain Support:** Pre-configured pipelines for four major datasets:
+    * **METR-LA:** Highway traffic speed in Los Angeles.
+    * **BART:** Hourly subway ridership in the SF Bay Area.
+    * **UrbanEV:** EV charging station occupancy in Shenzhen.
+    * **SubwayMTA:** Hourly subway ridership in New York City.
+* **Spatial-Aware Prompting:** Automatically identifies $k$-nearest neighbors for every node to provide the LLM with spatial context.
+* **Parallel Inference:** Uses Python `multiprocessing` to distribute datasets across multiple GPUs.
+* **Dynamic LLM Serving:** Automatically manages local Ollama server instances with unique environment variables and ports per process.
+
+Results are saved in a structured format containing:
+* `node_id`: The specific sensor or station index.
+* `hist_time_index`: The starting point of the historical window.
+* `prompt`: The exact text sent to the LLM.
+* `llm_content`: The raw numerical prediction returned by the model.
+
+You can modify the model name or sampling density in the `__main__` block:
+* **Model:** Change `'qwen3:14b'` to any model supported by Ollama.
+* **Sample Ratio:** Adjust `sample_ratio` within each `run_` function to control the number of inference windows and manage compute costs.
+
+> **Note:** This script uses `powershell` internally to manage environment variables for Ollama on Windows. For Linux environments, the `subprocess.Popen` command in `prompt_based_ollama_inference` should be adjusted to use `/bin/bash`.
