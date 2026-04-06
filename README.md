@@ -22,6 +22,10 @@ This script facilitates the extraction of urban-related knowledge and hidden-sta
 - **Embedding Extraction** (`get_llm_output_embeddings`): Generates the model response and extracts the hidden-state embeddings for the last generated token.
 - **Automated Batch Processing** (`enumerate_llm_output_embeddings`): Iteratively processes spatial, temporal, and daily queries for entire datasets.
 
+|  | Query Template |
+| ---- | ---- |
+| BART <br> (station-based) | Please provide details about the location, train operations, ridership demand, and landmarks nearby around the `<name of the station>` Station of the San Francisco Bay Area Rapid Transit System. |
+
 ---
 
 ### run_parallel_ollama.py
