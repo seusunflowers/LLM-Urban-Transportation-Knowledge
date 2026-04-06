@@ -25,7 +25,9 @@ This script facilitates the extraction of urban-related knowledge and hidden-sta
 ---
 
 ### run_parallel_ollama.py
-This script implements a multi-GPU, parallelized inference pipeline for spatial-temporal forecasting using LLMs. It leverages the **Ollama** framework to perform zero-shot/few-shot predictions on diverse datasets, including traffic speed, subway ridership, and EV charging occupancy. The core methodology involves converting numerical time-series data and spatial relationships (neighboring nodes) into natural language prompts, allowing the LLM to reason about physical trends and temporal patterns. Its **key features** including:
+This script implements a multi-GPU, parallelized inference pipeline for spatial-temporal forecasting using LLMs. It leverages the **Ollama** framework to perform zero-shot/few-shot predictions on diverse datasets, including traffic speed, subway ridership, and EV charging occupancy. The core methodology involves converting numerical time-series data and spatial relationships (neighboring nodes) into natural language prompts, allowing the LLM to reason about physical trends and temporal patterns. Specifically, time index, location context, historical observations of a node, and the observations of its two nearest neighbors are encoded into the prompts and instruct Qwen-3-14B to perform multi-step prediction, with outputs formatted as a Python list to facilitate numerical calculation.
+
+Its **key features** including:
 * **Multi-Domain Support:** Pre-configured pipelines for four major datasets:
     * **METR-LA:** Highway traffic speed in Los Angeles.
     * **BART:** Hourly subway ridership in the SF Bay Area.
