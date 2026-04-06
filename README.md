@@ -22,12 +22,31 @@ This script facilitates the extraction of urban-related knowledge and hidden-sta
 - **Embedding Extraction** (`get_llm_output_embeddings`): Generates the model response and extracts the hidden-state embeddings for the last generated token.
 - **Automated Batch Processing** (`enumerate_llm_output_embeddings`): Iteratively processes spatial, temporal, and daily queries for entire datasets.
 
+Both temporal and daily queries focus on overall dynamic characteristics across the systems. For the datasets with unique and widely-accepted labels to describe the areas (i.e., BART, UrbanEV, and SUBWAY-MTA), conveying the regional information in the queries to the LLM agents is intuitive and concise. In contrast, the METR-LA dataset is defined by a square region instead of a well-defined administrative or functional boundary. Hence, the relevant freeways and cities are enumerated in the queries. Detailed spatial, temporal, and daily query templates are as follows:
+
+Tab. 1 Spatial query templates
 | Datasets | Query Template |
 | :---- | :---- |
 | BART (station-based) | Please provide details about the location, train operations, ridership demand, and landmarks nearby around the `<name of the station>` Station of the San Francisco Bay Area Rapid Transit System. |
 | METR-LA (detector-based) | Please provide details about the location, traffic demand pattern, and traffic condition on a segment of the `<name of the freeway>` Freeway around `<name of the detector>` in `<name of the city>`, `<name of the county>` County, California, USA. |
 | UrbanEV (TAZ-based) | Please provide details about the details about the land use, residential composition, traffic patterns, electric vehicle friendliness, charging demand, and service levels around `<names of all bus and metro stations within the TAZ>` of Shenzhen City, Guangdong Province, China. (Note that the original queries are written in Chinese) |
 | SUBWAY-MTA (station-based) | Please provide details about the location, train operations, ridership demand, and landmarks nearby about the `<name of the station>` Station in `<name of the borough>` of the New York City Subway System. |
+
+Tab. 2 Temporal query templates
+| Datasets | Query Template |
+| :---- | :---- |
+| BART | San Francisco Bay Area Rapid Transit System during `<start and end time of the interval>`, service and ridership. |
+| METR-LA | Typical traffic demands and conditions at `<timestamp>` on I-110, I-210, I-405, SR-2, SR-170, I-5, SR-134, US-101 in Burbank, Glendale, La Canada-Flintridge, and Los Angeles, Los Angeles County, California, USA. |
+| UrbanEV | Chang demand and service levels of the electric vehicles during `<start and end time of the interval>`, Shenzhen City, Guangdong Province, China. (Note that the original queries are written in Chinese) |
+| SUBWAY-MTA | New York City Subway System during `<start and end time of the interval>`, service and ridership. |
+
+Tab. 3 Daily query templates
+| Datasets | Query Template |
+| :---- | :---- |
+| BART | San Francisco Bay Area Rapid Transit System on a typical `<day of week>`, service and ridership. |
+| METR-LA | Typical traffic demands and conditions on a typical `<day of week>` on I-110, I-210, I-405, SR-2, SR-170, I-5, SR-134, US-101 in Burbank, Glendale, La Canada-Flintridge, and Los Angeles, Los Angeles County, California, USA. |
+| UrbanEV | Chang demand and service levels of the electric vehicles on a typical `<day of week>`, Shenzhen City, Guangdong Province, China. (Note that the original queries are written in Chinese) |
+| SUBWAY-MTA | New York City Subway System on a typical `<day of week>`, service and ridership. |
 
 ---
 
