@@ -15,29 +15,6 @@ The **Llama-3.1-8B**, **Qwen-3-8B**, and **Qwen-3-14B** agents, three competitiv
 - **[SUBWAY-MTA](https://data.ny.gov/Transportation/MTA-Subway-Hourly-Ridership-2020-2024/wujg-7c2s/about_data)**: The SUBWAY-MTA dataset provides hourly ridership data for **428 subway stations** in the **New York City** metropolitan area in **2024**. Details for obtaining LLMs’ knowledge are consistent with those for the BART dataset.
 
 ## Script Introduction
-
-**Python Environment**
-python == 3.10.6
-
-numpy == 1.26.4
-pandas == 2.3.3
-scipy == 1.14.1
-geopandas == 1.1.1
-osmnx == 2.0.5
-sklearn == 1.5.2
-
-torch == 2.2.1+cu121
-transformers == 4.51.3
-torch_geometric == 2.5.2
-torch_geometric_temporal == 0.54.0
-ollama == 0.5.1
-
-tqdm == 4.67.2
-matplotlib == 3.10.1
-scienceplots == 2.1.1
-
----
-
 ### LLMUrbanKnowledge.ipynb
 This script facilitates the extraction of urban-related knowledge and hidden-state embeddings from LLMs (i.e., Llama-3.1-8B, Qwen-3-8B, and Qwen-3-14B) across multiple transit and traffic datasets. It generates textual descriptions and captures numerical representations (embeddings) for spatial, temporal, and daily urban patterns. It encapsulates the following **key functions**:
 - **Model-Specific Tokenization** (`tokenize_llm_inputs`): Formats input text into model-specific prompt templates, such as Llama 3.1 headers or Qwen 3 chat templates with thinking mode enabled.
