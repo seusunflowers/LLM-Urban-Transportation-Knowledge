@@ -1,6 +1,5 @@
 import ollama
 import calendar
-import re
 import random
 import tqdm
 import subprocess
