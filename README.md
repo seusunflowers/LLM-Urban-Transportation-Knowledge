@@ -50,6 +50,17 @@ Tab. 3 Daily query templates
 
 ---
 
+### LlmKnowledgeDecoding.ipynb
+Inspired by the vast knowledge parameterized by the LLMs, we assume they can comprehensively understand the spatial profiles of locations sufficiently reported in corpora. A promising method for validation is to decode the spatial features from their hidden states. Accordingly, linear regression models (least squares) are applied to extract the spatial semantic information embedded in **Qwen-3-14B**’s PCA-condensed hidden states. Significant accuracy and statistical correlation between the decoded and true features would provide evidence for the assumption.
+
+<img width="1009" height="444" alt="image" src="https://github.com/user-attachments/assets/a0bc9d74-b739-4aee-88f9-d6fa69ffea4e" />
+Fig. 2 Linearly decoding of the geographical coordinates. a-c, Distributions of the decoded and real coordinates of the spatial units in the SUBWAY-MTA, UrbanEV, and METR-LA datasets, respectively. d, Distributions of the decoded stations in Manhattan and the Bronx boroughs in New York City, USA. e, Distributions of the decoded TAZs in Luohu and Futian districts in Shenzhen City, China. d, Distributions of the decoded detectors on US-101 and SR-134 highways in Los Angeles, USA.
+
+<img width="1021" height="435" alt="image" src="https://github.com/user-attachments/assets/1ddaa3fe-491d-48f0-9091-cefc806c35d1" />
+Fig. 3 Linearly decoding of the temporal features of the BART, SUBWAY-MTA, UrbanEV, and METR-LA datasets. a-d, Decoding cosine-encoded time-of-day indices from Qwen-3-14B’s temporal knowledge to evaluate whether it understands the continuity and periodicity in time and the heterogeneity between daytime and nighttime. e-h, Decoding network-wide observations in a typical week from Qwen-3-14B’s temporal knowledge to evaluate whether it understands the typical transportation patterns in weekdays and weekends.
+
+---
+
 ### run_parallel_ollama.py
 This script implements a multi-GPU, parallelized inference pipeline for spatial-temporal forecasting using LLMs. It leverages the **Ollama** framework to perform zero-shot/few-shot predictions on diverse datasets, including traffic speed, subway ridership, and EV charging occupancy. The core methodology involves converting numerical time-series data and spatial relationships (neighboring nodes) into natural language prompts, allowing the LLM to reason about physical trends and temporal patterns. Specifically, time index, location context, historical observations of a node, and the observations of its two nearest neighbors are encoded into the prompts and instruct Qwen-3-14B to perform multi-step prediction, with outputs formatted as a Python list to facilitate numerical calculation.
 
