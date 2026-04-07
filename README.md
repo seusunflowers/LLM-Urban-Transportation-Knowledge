@@ -51,7 +51,24 @@ Tab. 3 Daily query templates
 ---
 
 ### LlmKnowledgeDecoding.ipynb
-Inspired by the vast knowledge parameterized by the LLMs, we assume they can comprehensively understand the spatial profiles of locations sufficiently reported in corpora. A promising method for validation is to decode the spatial features from their hidden states. Accordingly, linear regression models (least squares) are applied to extract the spatial semantic information embedded in **Qwen-3-14B**’s PCA-condensed hidden states. Significant accuracy and statistical correlation between the decoded and true features would provide evidence for the assumption.
+Inspired by the vast knowledge parameterized by the LLMs, we assume they can comprehensively understand the spatial and temporal profiles of urban transportation systems reported in corpora. A promising method for validation is to decode the spatial and temporal features from their hidden states. Deterministic attributes such as geographic locations, POI patterns, and time-of-day indices are considered as they contribute to the fundamental spatiotemporal profiles of transportation systems and underpin complex traffic dynamics. Linear regression models (least squares) are applied to extract the semantic information embedded in **Qwen-3-14B**’s PCA-condensed hidden states. Significant accuracy and statistical correlation between the decoded and true features would provide evidence for the assumption.
+
+The core logic is as follows:
+* **Embedding Extraction** Hidden states (typically from a Qwen3 model) are loaded from `.npz` files. We apply PCA to condense the high-dimensional LLM output (e.g., 5120 dimensions) into manageable components (e.g., 20–80 dimensions) while retaining maximum variance.
+* **Feature Alignment** Real-world features are prepared as targets:
+   - **Spatial**: Coordinates (X, Y) and POI distributions (via OpenStreetMap).
+   - **Structural**: Graph topology represented by Node2Vec embeddings.
+   - **Temporal**: Time-of-day (cosine encoding) and day-of-week.
+   - **Observational**: Historical average traffic speed, ridership, or occupancy.
+* **Linear Decoding** We use a linear probe to see if a simple transformation can reconstruct real-world features from LLM states. High correlation ($R_s, R_p$) indicates that the LLM has successfully "encoded" that specific urban concept in its latent space.
+* **Evaluation Metrics** The performance is measured using:
+   - **MAE**: Average error in the reconstructed normalized feature.
+   - **Spearman ($R_s$)**: Rank correlation between decoded and real values.
+   - **Pearson ($R_p$)**: Linear correlation between decoded and real values.
+* **Visualizations** The script generates several plots, including:
+   - **Geographical KDE Maps**: Density of decoded station locations vs. real locations.
+   - **Topology Links**: Comparison between real graph adjacency and decoded correlations.
+   - **Trend Comparison**: Decoded weekly/daily trends compared against real historical observations.
 
 <img width="1009" height="444" alt="image" src="https://github.com/user-attachments/assets/a0bc9d74-b739-4aee-88f9-d6fa69ffea4e" />
 Fig. 2 Linearly decoding of the geographical coordinates. a-c, Distributions of the decoded and real coordinates of the spatial units in the SUBWAY-MTA, UrbanEV, and METR-LA datasets, respectively. d, Distributions of the decoded stations in Manhattan and the Bronx boroughs in New York City, USA. e, Distributions of the decoded TAZs in Luohu and Futian districts in Shenzhen City, China. d, Distributions of the decoded detectors on US-101 and SR-134 highways in Los Angeles, USA.
