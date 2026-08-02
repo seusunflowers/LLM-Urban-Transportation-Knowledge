@@ -17,13 +17,13 @@ The **Llama-3.1-8B**, **Qwen-3-8B**, and **Qwen-3-14B** agents, three competitiv
 
 ## Script Introduction
 ### LLMUrbanKnowledge.ipynb
-This script facilitates the extraction of urban-related knowledge and hidden-state embeddings from LLMs (i.e., Llama-3.1-8B, Qwen-3-8B, and Qwen-3-14B) across multiple transit and traffic datasets. It generates textual descriptions and captures numerical representations (embeddings) for spatial, temporal, and daily urban patterns. It encapsulates the following **key functions**:
+This script facilitates the extraction of urban-related knowledge and hidden-state embeddings from LLMs (using Qwen-3-14B as an example) across multiple transit and traffic datasets. It generates textual descriptions and captures numerical representations (embeddings) for spatial, temporal, and daily urban patterns. The LLM inference relies on class `HuggingFaceLlmTools`, which encapsulates following **key functions**:
 - **Model-Specific Tokenization** (`tokenize_llm_inputs`): Formats input text into model-specific prompt templates, such as Llama 3.1 headers or Qwen 3 chat templates with thinking mode enabled.
 - **Response Decoding** (`decode_llm_outputs`): Post-processes raw token sequences. For Qwen 3, it specifically extracts and separates the reasoning (thinking_content) from the final content using the </think> token.
-- **Embedding Extraction** (`get_llm_output_embeddings`): Generates the model response and extracts the hidden-state embeddings for the last generated token.
-- **Automated Batch Processing** (`enumerate_llm_output_embeddings`): Iteratively processes spatial, temporal, and daily queries for entire datasets.
+- **Embedding Extraction** (`get_llm_outputs`): Generates the model response and extracts the hidden-state embeddings for the last generated token.
+- **Automated Batch Processing** (`enumerate_llm_outputs`): Iteratively processes spatial, temporal, and daily queries for entire datasets.
 
-Both temporal and daily queries focus on overall dynamic characteristics across the systems. For the datasets with unique and widely-accepted labels to describe the areas (i.e., BART, UrbanEV, and SUBWAY-MTA), conveying the regional information in the queries to the LLM agents is intuitive and concise. In contrast, the METR-LA dataset is defined by a square region instead of a well-defined administrative or functional boundary. Hence, the relevant freeways and cities are enumerated in the queries. Detailed spatial, temporal, and daily query templates are as follows:
+Both temporal and daily queries focus on overall dynamic characteristics across the systems. For the datasets with unique and widely-accepted labels to describe the areas (i.e., BART, Demand-QD, UrbanEV, and SUBWAY-MTA), conveying the regional information in the queries to the LLM agents is intuitive and concise. In contrast, the METR-LA dataset is defined by a square region instead of a well-defined administrative or functional boundary. Hence, the relevant freeways and cities are enumerated in the queries. Detailed spatial, temporal, and daily query templates are as follows:
 
 Tab. 1 Spatial query templates
 | Datasets | Query Template |

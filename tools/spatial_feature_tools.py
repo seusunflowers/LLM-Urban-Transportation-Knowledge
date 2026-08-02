@@ -60,7 +60,7 @@ class SpatialFeatureTools(object):
 
     @staticmethod
     def get_pois(geometries:gpd.GeoDataFrame, radius:float=0):
-        '''Retrieve POIs within or nearby the specified geometries'''
+        '''Retrieve POIs within or nearby the specified geometries from OpenStreetMap using OSMnx'''
         geometries['geometry'] = geometries.buffer(radius)
         pois = osmnx.features.features_from_polygon(polygon=geometries.to_crs(epsg=4326).union_all(),
                                                     tags={'landuse': ['commercial', 'construction', 'education', 'fairground', 'industrial', 'residential', 'retail', 'retail', 'institutional']}).reset_index().to_crs(geometries.crs)
@@ -73,7 +73,7 @@ class SpatialFeatureTools(object):
 
     @staticmethod
     def get_poi_distribution(geometries:gpd.GeoDataFrame, node_col_name:str, radius:float=0):
-        '''Retrieve POI distribution within or nearby the specified geometries'''
+        '''Retrieve POI distribution within or nearby the specified geometries from OpenStreetMap using OSMnx'''
         pois = SpatialFeatureTools.get_pois(geometries=geometries, radius=radius)
         pois['count'] = 1
         poi_distribution = pois[[node_col_name, 'landuse', 'count']].groupby(by=[node_col_name, 'landuse']).count().reset_index()
