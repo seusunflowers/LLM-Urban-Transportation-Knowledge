@@ -13,6 +13,7 @@ The **Llama-3.1-8B**, **Qwen-3-8B**, and **Qwen-3-14B** agents, three competitiv
 - **[METR-LA](https://github.com/liyaguang/DCRNN/tree/master/data/sensor_graph)**: The METR-LA dataset contains 5-minute average speed data collected from **207 urban highway sensors from March to June in 2012**, released by the **Los Angeles** Metropolitan Transportation Authority. Each sensor serves as a basic spatial unit, labeled with the name of nearby landmark. Therefore, the sensors’ names with their located highways are provided to pretrained LLM agents to obtain spatial heterogeneity insights. The temporal details are inquired at a 15-minute interval.
 - **[UrbanEV](https://github.com/IntelligentSystemsLab/UrbanEV?tab=readme-ov-file)**: The UrbanEV dataset includes hourly electric vehicle charging occupancies from 17,532 piles **between September 1, 2022 and February 28, 2023**, in **Shenzhen City**, Guangdong Province, China. A total of **275 traffic analysis zones (TAZs)** serve as basic spatial units for occupancy aggregation. Since the TAZs are randomly labeled, the authors provide all the names of bus and metro stations within the corresponding TAZ to LLM agents for spatial heterogeneity insights. **The raw queries are prepared in Chinese for the dataset describing a transportation system in China.**
 - **[SUBWAY-MTA](https://data.ny.gov/Transportation/MTA-Subway-Hourly-Ridership-2020-2024/wujg-7c2s/about_data)**: The SUBWAY-MTA dataset provides hourly ridership data for **428 subway stations** in the **New York City** metropolitan area in **2024**. Details for obtaining LLMs’ knowledge are consistent with those for the BART dataset.
+- **Demand-QD**: The Demand-QD dataset includes **trip demand data collected from May 2 to May 14, 2021, across the central urban area of Qingdao, China**. A total of **84 subdistricts** serve as the basic spatial units for trip aggregation, and their names are provided to the LLM to obtain spatial heterogeneity features. The trip data have a temporal resolution of 5 minutes, whereas the LLM is queried to infer temporal features at 15-minute intervals. **The prompts are written in Chinese** because the dataset describes a transportation system in China. Notably, **the trip data are private and were collected from Baidu Map, a mainstream location-based service provider in China. The collected data cover only a subset of the overall travel demand and are inaccessible to pretrained LLMs.**
 
 ## Script Introduction
 ### LLMUrbanKnowledge.ipynb
@@ -28,6 +29,7 @@ Tab. 1 Spatial query templates
 | Datasets | Query Template |
 | :---- | :---- |
 | BART (station-based) | Please provide details about the location, train operations, ridership demand, and landmarks nearby around the `<name of the station>` Station of the San Francisco Bay Area Rapid Transit System. |
+| Demand-QD (zone-based) | Please provide details about the economic level, population size, land use, industrial structure, and trip demand of `<name of the subdistrict>`, Qingdao City, Shandong Province, China. (Note that the original queries are written in Chinese) |
 | METR-LA (detector-based) | Please provide details about the location, traffic demand pattern, and traffic condition on a segment of the `<name of the freeway>` Freeway around `<name of the detector>` in `<name of the city>`, `<name of the county>` County, California, USA. |
 | UrbanEV (TAZ-based) | Please provide details about the details about the land use, residential composition, traffic patterns, electric vehicle friendliness, charging demand, and service levels around `<names of all bus and metro stations within the TAZ>` of Shenzhen City, Guangdong Province, China. (Note that the original queries are written in Chinese) |
 | SUBWAY-MTA (station-based) | Please provide details about the location, train operations, ridership demand, and landmarks nearby about the `<name of the station>` Station in `<name of the borough>` of the New York City Subway System. |
@@ -36,6 +38,7 @@ Tab. 2 Temporal query templates
 | Datasets | Query Template |
 | :---- | :---- |
 | BART | San Francisco Bay Area Rapid Transit System during `<start and end time of the interval>`, service and ridership. |
+| Demand-QD | Trip demand at `<timestamp>` in the central urban area of Qingdao, Shandong Province, China. (Note that the original queries are written in Chinese) |
 | METR-LA | Typical traffic demands and conditions at `<timestamp>` on I-110, I-210, I-405, SR-2, SR-170, I-5, SR-134, US-101 in Burbank, Glendale, La Canada-Flintridge, and Los Angeles, Los Angeles County, California, USA. |
 | UrbanEV | Chang demand and service levels of the electric vehicles during `<start and end time of the interval>`, Shenzhen City, Guangdong Province, China. (Note that the original queries are written in Chinese) |
 | SUBWAY-MTA | New York City Subway System during `<start and end time of the interval>`, service and ridership. |
@@ -44,6 +47,7 @@ Tab. 3 Daily query templates
 | Datasets | Query Template |
 | :---- | :---- |
 | BART | San Francisco Bay Area Rapid Transit System on a typical `<day of week>`, service and ridership. |
+| Demand-QD | Trip demand on a typical `<day of week>` in the central urban area of Qingdao, Shandong Province, China. (Note that the original queries are written in Chinese) |
 | METR-LA | Typical traffic demands and conditions on a typical `<day of week>` on I-110, I-210, I-405, SR-2, SR-170, I-5, SR-134, US-101 in Burbank, Glendale, La Canada-Flintridge, and Los Angeles, Los Angeles County, California, USA. |
 | UrbanEV | Chang demand and service levels of the electric vehicles on a typical `<day of week>`, Shenzhen City, Guangdong Province, China. (Note that the original queries are written in Chinese) |
 | SUBWAY-MTA | New York City Subway System on a typical `<day of week>`, service and ridership. |
