@@ -105,7 +105,7 @@ def run_metrla(gpu_id:int, ollama_host:str, ollama_model:str):
     del data['time'], data['workday']
 
     ## prompt-based inference
-    neighbor_indices = get_knearest_nodes(A=np.load(f'{RAW_DATA_DICT}/adj_mat.npy'), k=2)
+    neighbor_indices = get_knearest_nodes(A=np.load(f'{RAW_DATA_DICT}/adj_mat.npy'), k=2
     elem_iter = ((fwy_name + '-' + fwy_dir, det_name, det_city, det_county) for _, _, fwy_dir, det_name, det_county, fwy_name, det_city in station_info.itertuples())
     query_template = 'Considering a segment of the {} Freeway around {} in {}, {} County, California, USA, its speed observations from {} to {} in every five minutes are {}. ' +\
                      'The typical speed observations of its two nearest segments are {} and {}, respectively. Please predict its next twenty-four speed observations. ' + \
